@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>تعديل السلوك</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار تعديل السلوك - الفصل الخامس والسادس</title>
     <style>
         * {
             margin: 0;
@@ -12,447 +12,626 @@
         }
 
         body {
+            font-family: 'Segoe UI', 'Tahoma', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
-            background: radial-gradient(circle at 20% 30%, #0a0f2a, #020617);
-            font-family: 'Segoe UI', 'Poppins', 'Cairo', 'Tajawal', system-ui, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem 1.5rem;
-            position: relative;
-            direction: rtl;
+            padding: 20px;
         }
 
-        .ocean-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            overflow: hidden;
-            background: linear-gradient(145deg, #011126, #001a33);
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        .ocean-backdrop::before {
-            content: "";
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background: radial-gradient(circle at 30% 40%, rgba(20, 180, 220, 0.25), transparent 60%);
-            animation: slowDrift 28s infinite alternate ease-in-out;
-        }
-
-        .ocean-backdrop::after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient( transparent 0px, transparent 3px, rgba(120, 200, 255, 0.05) 3px, rgba(0, 150, 200, 0.08) 6px);
-            pointer-events: none;
-            animation: surfaceRipple 12s infinite linear;
-        }
-
-        @keyframes slowDrift {
-            0% { transform: translate(-5%, -5%) rotate(0deg);}
-            100% { transform: translate(5%, 5%) rotate(3deg);}
-        }
-
-        @keyframes surfaceRipple {
-            0% { background-position: 0 0;}
-            100% { background-position: 100px 200px;}
-        }
-
-        .bubble {
-            position: fixed;
-            bottom: -100px;
-            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), rgba(180,230,250,0.15));
-            border-radius: 50%;
-            backdrop-filter: blur(2px);
-            pointer-events: none;
-            z-index: -1;
-            animation: riseBubble linear infinite;
-        }
-
-        @keyframes riseBubble {
-            0% { transform: translateY(0) scale(0.6); opacity: 0.6;}
-            100% { transform: translateY(-120vh) scale(1.2); opacity: 0;}
-        }
-
-        .glass-container {
-            max-width: 1400px;
-            width: 100%;
-            background: rgba(8, 25, 55, 0.25);
-            backdrop-filter: blur(10px);
-            border-radius: 3rem;
-            border: 1px solid rgba(90, 210, 255, 0.3);
-            box-shadow: 0 25px 55px rgba(0,0,0,0.3);
-            padding: 1.8rem 2rem 3rem;
-        }
-
-        .header-deep {
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
             text-align: center;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
-            padding-bottom: 0.8rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .header-deep h1 {
-            font-size: 3rem;
-            background: linear-gradient(135deg, #fff, #7df9ff, #3bc9ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 2px;
+        .header h1 {
+            color: #1e3c72;
+            font-size: 28px;
+            margin-bottom: 10px;
         }
 
-        .quiz-grid {
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .stats {
             display: flex;
-            flex-direction: column;
-            gap: 1.8rem;
+            justify-content: space-between;
+            background: white;
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stats div {
+            text-align: center;
+        }
+
+        .stats span:first-child {
+            font-size: 14px;
+            color: #666;
+            display: block;
+        }
+
+        .stats .number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2a5298;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 10px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #2a5298, #4c9aff);
+            width: 0%;
+            height: 100%;
+            transition: width 0.3s ease;
         }
 
         .question-card {
-            background: rgba(10, 20, 45, 0.5);
-            backdrop-filter: blur(12px);
-            border-radius: 1.8rem;
-            padding: 1.3rem 1.6rem;
-            border: 1px solid rgba(70, 200, 240, 0.4);
-            transition: transform 0.2s ease;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
         }
 
         .question-card:hover {
-            transform: translateY(-3px);
-            border-color: #5bd5ff;
+            transform: translateY(-2px);
         }
 
         .question-text {
-            font-size: 1.1rem;
+            font-size: 18px;
             font-weight: 600;
-            color: #f0fcff;
-            margin-bottom: 1rem;
-            line-height: 1.45;
-            border-right: 4px solid #0af;
-            padding-right: 1rem;
-            text-align: right;
-        }
-
-        .arabic-number {
-            display: inline-block;
-            margin-right: 0.5rem;
-            font-weight: bold;
-            color: #7df9ff;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            line-height: 1.5;
         }
 
         .options {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin: 0.8rem 0 1.2rem 0;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .opt {
-            background: rgba(0, 25, 50, 0.75);
-            border-radius: 3rem;
-            padding: 0.7rem 0.8rem;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 1px solid #2f95c0;
-            color: #e2f0ff;
-            font-weight: 500;
-            flex: 1;
-            text-align: center;
-            font-size: 0.85rem;
-            line-height: 1.3;
-            min-width: 200px;
-        }
-
-        .opt.selected {
-            background: linear-gradient(135deg, #0e6f9e, #0a4b6e);
-            border-color: #9effff;
-            color: white;
-            box-shadow: 0 0 8px #5effe0;
-            cursor: default;
-            opacity: 0.95;
-        }
-
-        .opt.disabled-opt {
-            cursor: default;
-            pointer-events: none;
-            opacity: 0.7;
-        }
-
-        .opt:hover:not(.selected):not(.disabled-opt) {
-            background: #1b6c94;
-            border-color: #b0ffff;
-        }
-
-        .check-btn-wrapper {
+        .option {
             display: flex;
-            justify-content: center;
-            margin: 0.3rem 0 0.2rem;
-        }
-
-        .check-btn {
-            background: rgba(0, 212, 255, 0.15);
-            backdrop-filter: blur(8px);
-            border: 1.5px solid #0cf;
-            color: #dcf5ff;
-            font-size: 0.9rem;
-            font-weight: bold;
-            padding: 0.5rem 1.5rem;
-            border-radius: 40px;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.2s;
-            min-width: 150px;
-            text-align: center;
+            transition: all 0.2s;
+            border: 2px solid transparent;
         }
 
-        .check-btn:hover {
-            background: #0cf3;
-            box-shadow: 0 0 10px #0cf;
-            color: white;
-            border-color: white;
+        .option:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .option input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #2a5298;
+        }
+
+        .option label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 15px;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .option.correct-highlight {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .option.wrong-highlight {
+            background: #f8d7da;
+            border-color: #dc3545;
         }
 
         .feedback {
-            margin-top: 0.8rem;
-            padding: 0.6rem 1rem;
-            border-radius: 1rem;
-            font-size: 0.85rem;
-            background: rgba(0, 0, 0, 0.55);
-            border-right: 4px solid;
-            transition: 0.2s;
-            color: #e0f2fe;
-            text-align: right;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            display: none;
         }
 
         .feedback.correct {
-            border-right-color: #0f9;
-            background: rgba(0, 100, 80, 0.45);
+            background: #d4edda;
+            color: #155724;
+            display: block;
         }
 
         .feedback.wrong {
-            border-right-color: #f66;
-            background: rgba(130, 0, 0, 0.4);
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
         }
 
-        .result-container {
-            margin-top: 2.5rem;
-            padding: 1.2rem;
-            text-align: center;
-            background: rgba(0, 30, 60, 0.6);
-            backdrop-filter: blur(10px);
-            border-radius: 2rem;
-            border: 1px solid #0cf;
-        }
-
-        .score-text {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #7df9ff;
-        }
-
-        .submit-all {
-            display: flex;
-            justify-content: center;
-            margin: 2rem 0 1rem;
-        }
-
-        .submit-final {
-            background: linear-gradient(135deg, #0e6f9e, #0a4b6e);
-            border: 2px solid #0cf;
+        .btn-check-question {
+            background: #2a5298;
             color: white;
-            font-size: 1.3rem;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 13px;
             font-weight: bold;
-            padding: 0.8rem 2.5rem;
-            border-radius: 60px;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 0 15px #0cf3;
+            margin-top: 15px;
+            transition: all 0.3s;
         }
 
-        .submit-final:hover {
+        .btn-check-question:hover {
+            background: #1e3c72;
             transform: scale(1.02);
-            box-shadow: 0 0 25px #0cf;
-            background: linear-gradient(135deg, #1a8fbd, #0e5f8a);
         }
 
-        @media (max-width: 750px) {
-            .glass-container { padding: 1rem 1.2rem 2rem;}
-            .question-text { font-size: 0.95rem;}
-            .opt { font-size: 0.7rem; padding: 0.5rem 0.5rem; min-width: auto;}
-            .score-text { font-size: 1.3rem;}
-            .header-deep h1 { font-size: 2rem;}
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-check-all {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-check-all:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        .btn-reset {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: #5a6268;
+            transform: scale(1.05);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        .result-card h2 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2a5298;
+            margin: 15px 0;
+        }
+
+        .feedback-text {
+            color: #666;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .question-text {
+                font-size: 16px;
+            }
+            .option label {
+                font-size: 13px;
+            }
+            .stats .number {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 <body>
-<div class="ocean-backdrop"></div>
+    <div class="container">
+        <div class="header">
+            <h1>📚 اختبار تعديل السلوك والعلاج السلوكي</h1>
+            <p>الفصل الخامس: نظريات التعلم الإجرائي والاجتماعي | الفصل السادس: التقنيات المتقدمة</p>
+            <p style="font-size: 14px; color: #888; margin-top: 10px;">30 سؤالاً - اختاري الإجابة ثم اضغطي "تصحيح" تحت كل سؤال</p>
+        </div>
 
-<div class="glass-container">
-    <div class="header-deep">
-        <h1>تعديل السلوك</h1>
+        <div class="stats">
+            <div>
+                <span>✅ تم الإجابة</span>
+                <span class="number" id="answeredCount">0</span>
+            </div>
+            <div>
+                <span>📊 الإجابات الصحيحة</span>
+                <span class="number" id="correctCount">0</span>
+            </div>
+            <div>
+                <span>❌ الإجابات الخاطئة</span>
+                <span class="number" id="wrongCount">0</span>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="button-group">
+            <button class="btn-check-all" onclick="checkAllAnswers()">📝 تصحيح جميع الأسئلة</button>
+            <button class="btn-reset" onclick="resetQuiz()">🔄 مسح الكل وبدء جديد</button>
+        </div>
+
+        <div class="result-card" id="resultCard">
+            <h2>🏆 نتيجة الاختبار</h2>
+            <div class="score" id="finalScore">0 / 30</div>
+            <div class="feedback-text" id="finalFeedback"></div>
+        </div>
+
+        <footer>
+            <p>الأسئلة مبنية على المحتوى العلمي للكتاب | المستوى: صعب | عدد الأسئلة: 30</p>
+        </footer>
     </div>
 
-    <div class="quiz-grid" id="quizContainer"></div>
-    
-    <div class="submit-all">
-        <div class="submit-final" id="submitFinalBtn">🌊 احتساب الدرجة النهائية 🌊</div>
-    </div>
-    <div class="result-container" id="resultContainer" style="display: none;">
-        <div class="score-text" id="scoreDisplay"></div>
-        <p style="color: #bbf0ff; margin-top: 0.5rem;">الدرجة الكلية من 25
-        </p>
-    </div>
-</div>
+    <script>
+        // بيانات الأسئلة والإجابات الصحيحة
+        const questions = [
+            { text: "أي من العبارات التالية يصف بشكل أفضل الفرق بين التعزيز السلبي والعقاب بالسحب؟", options: ["A) التعزيز السلبي يزيد السلوك عن طريق إزالة مثير منفر، بينما العقاب بالسحب يقلل السلوك عن طريق إزالة مثير معزز", "B) التعزيز السلبي يقلل السلوك عن طريق إزالة مثير منفر، بينما العقاب بالسحب يزيد السلوك عن طريق إزالة مثير معزز", "C) كلاهما يتضمن إزالة مثير، لكن التعزيز السلبي يتبع سلوكاً غير مرغوب بينما العقاب يتبع سلوكاً مرغوباً", "D) لا يوجد فرق وظيفي؛ المصطلحات قابلة للتبادل"], correct: "A" },
+            { text: "في جدول التعزيز ذو الفترة الثابتة (FI)، النمط النموذجي للاستجابة يتميز بـ:", options: ["A) معدل مرتفع وثابت من الاستجابات مع عدم وجود توقف بعد التعزيز", "B) معدل منخفض من الاستجابات يتبعه زيادة تدريجية مع اقتراب نهاية الفترة", "C) معدل مرتفع جداً من الاستجابات فوراً بعد التعزيز", "D) معدل منخفض بشكل منتظم طوال الفترة بأكملها"], correct: "B" },
+            { text: "أي من التالي مثال على عملية التحفيز الشرطية - الانعكاسية (CMO-R)؟", options: ["A) الشعور بالجوع الذي يزيد من قيمة الطعام", "B) ضوء تحذيري يشير إلى اقتراب مثير منفر، مما يجعل سلوكيات الهروب أكثر تعزيزاً", "C) غياب أداة مطلوبة مما يجعل الحصول على تلك الأداة معززاً", "D) رمز تم اقترانه مع معززات خلفية"], correct: "B" },
+            { text: "انفجار الإطفاء (Extinction burst) يشير إلى:", options: ["A) الاختفاء الدائم للسلوك بعد سحب التعزيز", "B) زيادة مؤقتة في تكرار أو شدة أو مدة السلوك عند تطبيق الإطفاء لأول مرة", "C) العودة التلقائية للسلوك بعد الإطفاء بدون تعزيز", "D) تعميم الإطفاء إلى سلوكيات أخرى"], correct: "B" },
+            { text: "أي جدول من جداول التعزيز ينتج أعلى وأثبت معدل من الاستجابات مع عدم وجود توقف تقريباً بعد التعزيز؟", options: ["A) النسبة الثابتة (FR)", "B) الفترة الثابتة (FI)", "C) النسبة المتغيرة (VR)", "D) الفترة المتغيرة (VI)"], correct: "C" },
+            { text: "عند استخدام التعزيز التفاضلي للسلوك البديل (DRA)، ما هو المطلب الإجرائي الحاسم؟", options: ["A) يجب أن يكون السلوك البديل غير متوافق مع السلوك المشكلة", "B) يتم تقديم التعزيز لغياب السلوك المشكلة لفترة زمنية محددة", "C) يتم تقديم التعزيز لسلوك بديل محدد مع وضع السلوك المشكلة تحت الإطفاء", "D) يتم تعزيز السلوك المشكلة على جدول خفيف بينما يتم تعزيز السلوك البديل على جدول كثيف"], correct: "C" },
+            { text: "أي من التالي ليس من خصائص المعاقب الفعال؟", options: ["A) يتم تقديمه فوراً بعد السلوك", "B) يكون شديداً بما يكفي لقمع السلوك في البداية", "C) يتم تقديمه باستمرار في كل مرة يحدث فيها السلوك", "D) يتم تقديمه بعد تقديم مثير تحذيري"], correct: "D" },
+            { text: "الفرق الأساسي بين التعزيز الإيجابي والتعزيز السلبي هو:", options: ["A) التعزيز الإيجابي يزيد السلوك؛ التعزيز السلبي يقلل السلوك", "B) التعزيز الإيجابي يتضمن إضافة مثير؛ التعزيز السلبي يتضمن إزالة مثير", "C) التعزيز الإيجابي يستخدم معززات أولية؛ التعزيز السلبي يستخدم معززات شرطية", "D) التعزيز الإيجابي أكثر فعالية من التعزيز السلبي"], correct: "B" },
+            { text: "المثير التمييزي (SD) يشير إلى أن:", options: ["A) السلوك لن يتم تعزيزه", "B) التعزيز متاح لسلوك معين", "C) مثير منفر على وشك الحدوث بغض النظر عن السلوك", "D) قيمة المعزز قد تغيرت"], correct: "B" },
+            { text: "أي من التالي يصف بشكل أفضل قانون المطابقة (Matching Law)؟", options: ["A) معدل الاستجابة يطابق معدل التعزيز لكل بديل في موقف الاختيار", "B) شدة الاستجابة تطابق مقدار المعزز", "C) مدة السلوك تطابق جدول التعزيز", "D) هيئة السلوك تطابق المثير التمييزي"], correct: "A" },
+            { text: "في تعديل السلوك، العجز السلوكي (Behavioral deficit) يشير إلى:", options: ["A) سلوك يحدث بشكل متكرر جداً", "B) سلوك مرغوب يحدث بشكل نادر جداً", "C) سلوك غير مناسب للنمو", "D) سلوك يسبب ضرراً للآخرين"], correct: "B" },
+            { text: "أي من التالي مثال على العقاب السلبي؟", options: ["A) إعطاء طفل وقت مستقطع (فترة هدوء) من وقت اللعب لأنه ضرب", "B) إعطاء طفل أعمالاً منزلية إضافية لأنه تحدث بوقاحة", "C) مدح طفل لإنهائه الواجب", "D) إزالة صوت عالٍ عندما يربط الطفل حزام الأمان"], correct: "A" },
+            { text: "معلم يريد زيادة سلوك رفع اليد. يعطي ملصقاً لكل 3 مرات يرفع فيها الطالب يده. هذا يُعتبر جدول:", options: ["A) فترة ثابتة (FI)", "B) نسبة متغيرة (VR)", "C) نسبة ثابتة (FR)", "D) فترة متغيرة (VI)"], correct: "C" },
+            { text: "أي من العبارات التالية عن عمليات التحفيز (MOs) صحيح؟", options: ["A) عمليات التحفيز تؤثر فقط على السلوك من خلال تأثيرها على المثيرات التمييزية", "B) عمليات التحفيز تغير الفعالية الحالية للمعززات وتكرار السلوكيات التي تنتجها", "C) عمليات التحفيز غير شرطية ولا يمكن تعلمها", "D) عمليات التحفيز فقط تزيد السلوك؛ ولا تقلله أبداً"], correct: "B" },
+            { text: "تأثير الإطفاء للتعزيز الجزئي (PREE) يشير إلى اكتشاف أن:", options: ["A) السلوكيات المعززة على جدول مستمر أكثر مقاومة للإطفاء", "B) السلوكيات المعززة على جدول جزئي أكثر مقاومة للإطفاء", "C) التعزيز الجزئي ينتج إطفاء أسرع من التعزيز المستمر", "D) الإطفاء يحدث فقط عندما يكون التعزيز جزئياً"], correct: "B" },
+            { text: "في تشكيل (Shaping) سلوك جديد، ما هو المبدأ الأكثر أهمية للاتباع؟", options: ["A) تعزيز السلوك النهائي المستهدف من البداية", "B) تعزيز التقريبات المتتالية نحو السلوك المستهدف", "C) معاقبة جميع الاستجابات التي ليست السلوك النهائي", "D) استخدام معززات أولية فقط طوال العملية"], correct: "B" },
+            { text: "أي من التالي مثال على التسلسل الأمامي (Forward chaining)؟", options: ["A) تعليم الخطوة الأخيرة أولاً، ثم التي تسبقها، وهكذا", "B) تعليم الخطوة الأولى، ثم الأولى والثانية معاً، ثم الأولى والثانية والثالثة", "C) تعليم جميع الخطوات في وقت واحد حتى يكتمل التسلسل", "D) تعزيز فقط الخطوة النهائية من التسلسل"], correct: "B" },
+            { text: "في التسلسل الخلفي (Backward chaining)، المدرب عادةً:", options: ["A) يبدأ بالخطوة الأولى ويتحرك للأمام", "B) يكمل جميع الخطوات ما عدا الأخيرة، ويجعل المتعلم يكمل الخطوة الأخيرة", "C) يكمل جميع الخطوات ما عدا الأولى، ويجعل المتعلم يكمل الخطوة الأولى", "D) يجعل المتعلم يكمل جميع الخطوات بشكل مستقل من البداية"], correct: "B" },
+            { text: "اقتصاد البونات (Token economy) يقوم على مبدأ:", options: ["A) التشريط الكلاسيكي فقط", "B) التعزيز الشرطي المعمم", "C) العقاب بالسحب", "D) التعلم بالملاحظة فقط"], correct: "B" },
+            { text: "أي من التالي هو مكون حاسم لاقتصاد بونات ناجح؟", options: ["A) يتم تقديم البونات على جدول مستمر في البداية", "B) لا يتم استبدال البونات أبداً بمعززات خلفية", "C) المعززات الخلفية غير معروفة للمشاركين", "D) يتم تقديم البونات بعد تأخير لتعليم الصبر"], correct: "A" },
+            { text: "تكلفة الاستجابة (Response cost) هي إجراء ي:", options: ["A) يضيف مثيراً منفراً بعد السلوك", "B) يزيل كمية محددة من التعزيز بعد السلوك", "C) يقدم تعزيزاً لغياب السلوك", "D) يغير معيار التعزيز تدريجياً"], correct: "B" },
+            { text: "أي من التالي يصف بشكل أفضل الفرق بين التسلسل (Chaining) والتشكيل (Shaping)؟", options: ["A) التشكيل يخلق سلوكيات جديدة؛ التسلسل يربط سلوكيات موجودة", "B) التسلسل يخلق سلوكيات جديدة؛ التشكيل يربط سلوكيات موجودة", "C) التشكيل يستخدم التعزيز؛ التسلسل لا يستخدمه", "D) التسلسل يستخدم فقط للسلوكيات الحركية؛ التشكيل للسلوكيات اللفظية"], correct: "A" },
+            { text: "في التعلم بالملاحظة، العملية الفرعية للإنتاج (Reproduction) تشير إلى:", options: ["A) قدرة المتعلم على الانتباه إلى النموذج", "B) قدرة المتعلم على تذكر السلوك المرصود", "C) قدرة المتعلم الجسدية والمعرفية على أداء السلوك المرصود", "D) رغبة المتعلم في أداء السلوك المرصود"], correct: "C" },
+            { text: "أي عامل ثبت أنه يزيد من فعالية النموذج في التعلم بالملاحظة؟", options: ["A) النموذج ذو مكانة أقل من المراقب", "B) النموذج يُنظر إليه على أنه كفء ومرموق", "C) سلوك النموذج لا يتم تعزيزه", "D) ليس للمراقب علاقة سابقة بالنموذج"], correct: "B" },
+            { text: "التعزيز بالنيابة (Vicarious reinforcement) يحدث عندما:", options: ["A) يتم تعزيز المراقب مباشرة لتقليده النموذج", "B) يتغير سلوك المراقب بعد رؤية سلوك النموذج يتم تعزيزه", "C) يتم معاقبة النموذج على سلوكه", "D) يتم تعزيز المراقب والنموذج في نفس الوقت"], correct: "B" },
+            { text: "أي من التالي ليس مكوناً أساسياً لتحليل المهمة (Task analysis) من أجل التسلسل؟", options: ["A) تحديد جميع الخطوات المكونة للسلوك", "B) ترتيب الخطوات في تسلسل منطقي", "C) تحديد المعزز المناسب للمتعلم", "D) حذف جميع التعليمات اللفظية أثناء التدريب"], correct: "D" },
+            { text: "الميزة الرئيسية لاستخدام التسلسل الخلفي على التسلسل الأمامي هي:", options: ["A) يتطلب مساعدة أقل من المدرب", "B) يسمح للمتعلم بتجربة التعزيز الفوري لإكمال التسلسل", "C) أسرع في التطبيق", "D) لا يتطلب تحليل مهمة"], correct: "B" },
+            { text: "في التشكيل (Shaping)، يجب تغيير معيار التعزيز:", options: ["A) فقط عندما يتقن المتعلم السلوك النهائي", "B) بعد أن يتقن المتعلم المعيار الحالي باستمرار", "C) كل جلسة بغض النظر عن الأداء", "D) فقط عندما يرتكب المتعلم أخطاء"], correct: "B" },
+            { text: "أي من التالي مثال على التصحيح المفرط (Overcorrection) كإجراء منفر؟", options: ["A) إزالة بونات مقابل سلوك تخريبي", "B) جعل طالب ينظف الفصل بأكمله بعد أن يتسبب في فوضى صغيرة", "C) مدح طالب على سلوك مناسب", "D) تجاهل سلوك جذب الانتباه"], correct: "B" },
+            { text: "عملية التعرض مع منع الاستجابة (ERP) تستخدم بشكل شائع لعلاج:", options: ["A) الاكتئاب", "B) اضطراب الوسواس القهري (OCD)", "C) اضطراب القلق الاجتماعي", "D) الرهاب المحدد"], correct: "B" }
+        ];
 
-<script>
-    const arabicNumbers = [
-        "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩", "١٠",
-        "١١", "١٢", "١٣", "١٤", "١٥", "١٦", "١٧", "١٨", "١٩", "٢٠",
-        "٢١", "٢٢", "٢٣", "٢٤", "٢٥", "٢٦", "٢٧", "٢٨", "٢٩", "٣٠",
-        "٣١", "٣٢", "٣٣", "٣٤", "٣٥", "٣٦", "٣٧", "٣٨", "٣٩", "٤٠",
-        "٤١", "٤٢", "٤٣", "٤٤", "٤٥", "٤٦", "٤٧", "٤٨", "٤٩", "٥٠"
-    ];
+        let userAnswers = new Array(questions.length).fill(null);
+        let answerStatus = new Array(questions.length).fill(null); // 'correct', 'wrong', or null
+        let quizChecked = false;
 
-    // جميع الأسئلة مستمدة فقط من الصفحات 75-87 من الكتاب
-    // الإجابات بنفس الطول تقريباً - صعبة ومحيرة
-    // الإجابة الصحيحة عشوائية تماماً
-    
-    const questions = [
-        { text: "ما الذي يحدد ما إذا كان التصميم البحثي تجريبياً أم شبه تجريبي أم غير تجريبي؟", options: ["عدد المشاركين في الدراسة", "مدة إجراء الدراسة", "طبيعة التصميم من حيث المجموعات", "الميزانية المخصصة للبحث"], correct: 2, explanation: "الصفحة 75: تقسم التصميمات من حيث المجموعات إلى تجريبية وشبه تجريبية وغير تجريبية." },
-        { text: "في الصفحة 76، لماذا يعتبر التصميم البحثي الضعيف مشكلة كبيرة؟", options: ["لأنه يطيل مدة الدراسة", "لأنه يزيد التكاليف", "لأنه يجعل الدراسة غير قادرة على تحقيق أهدافها", "لأنه يصعب نشره"], correct: 2, explanation: "الصفحة 75: التصميم الضعيف يجعل الدراسة غير قادرة على تحقيق أهدافها حتى لو كانت أدواتها جيدة." },
-        { text: "ماذا يفعل الباحث في التصميمات التجريبية كما ورد في الصفحة 77؟", options: ["يلاحظ السلوك فقط", "يجري مقابلات مع المشاركين", "يتدخل فعلياً لمعرفة تأثير المتغير المستقل", "يحلل بيانات ثانوية"], correct: 2, explanation: "الصفحة 77: التصميمات التجريبية تتضمن تدخلاً فعلياً من الباحث لمعرفة تأثيره على المتغير التابع." },
-        { text: "كيف يتم توزيع أفراد العينة في تصميم المجموعتين التجريبية والضابطة؟", options: ["حسب الترتيب الأبجدي", "حسب العمر", "حسب الجنس", "عشوائياً"], correct: 3, explanation: "الصفحة 78: يتم توزيع أفراد العينة عشوائياً على مجموعتين تجريبية وضابطة." },
-        { text: "متى تستخدم التصميمات العاملية المتعددة حسب الصفحة 78؟", options: ["عندما لا يوجد متغير مستقل", "عندما يكون هناك أكثر من متغير مستقل", "عندما تكون العينة صغيرة", "عندما يكون الوقت قصيراً"], correct: 1, explanation: "الصفحة 78: تستخدم التصميمات العاملية المتعددة عندما يوجد أكثر من متغير مستقل." },
-        { text: "ما الذي يميز تصميم القياس المتكرر كما ورد في الصفحة 79؟", options: ["قياس لمرة واحدة بعد التدخل", "قياس المتغير التابع لنفس المجموعة عدة مرات", "مقارنة بين مجموعتين مختلفتين", "الاعتماد على الملاحظة فقط"], correct: 1, explanation: "الصفحة 79: يتم قياس المتغير التابع لنفس المجموعة قبل وبعد التدخل عدداً من المرات." },
-        { text: "في الصفحة 80، لماذا يعتبر تصميم المجموعة الواحدة بقياس بعدي فقط وصفياً؟", options: ["لأنه سريع التنفيذ", "لأنه لا يثبت علاقات سببية", "لأنه رخيص التكلفة", "لأنه يحتاج لعينة كبيرة"], correct: 1, explanation: "الصفحة 80: هذا التصميم لا يعطي استنتاجات عن علاقات سببية، بل يعطي فروضاً." },
-        { text: "ما اسم العالمين اللذين أشارت إليهما الصفحة 81 في دراسة منعكس الاستفزاز؟", options: ["بافلوف وسكنر", "واطسون ورينر", "وولف ووولف", "ثورندايك وأيزنك"], correct: 2, explanation: "الصفحة 81: وولف ووولف (1943) أجريا دراسة على منعكس الاستفزاز." },
-        { text: "ما الذي قدمته دراسة وولف ووولف (1943) حسب الصفحة 81؟", options: ["نظرية جديدة في التعلم", "فهم لكيفية تأثير التجارب السلبية على الدافعية", "تصميماً إحصائياً جديداً", "أداة لقياس القلق"], correct: 1, explanation: "الصفحة 81: اكتشف الباحثان أن التجارب السلبية تؤدي إلى زيادة الدافعية." },
-        { text: "ماذا تعني دراسة الحالة الطبيعية (Naturalistic Case Study) وفقاً للصفحة 82؟", options: ["دراسة تجريبية في المعمل", "وصف متعمق لفرد في بيئته الطبيعية", "مقارنة بين مجموعات كبيرة", "تحليل إحصائي كمي"], correct: 1, explanation: "الصفحة 82: دراسة الحالة الطبيعية هي وصف متعمق لفرد دون تلاعب بالمتغيرات." },
-        { text: "من هو الجريح الذي درسه لوريا (1972) كما ورد في الصفحة 83؟", options: ["ألبرت الصغير", "زازيتسكي", "آنا", "بيتر"], correct: 1, explanation: "الصفحة 83: لوريا درس الجريح زازيتسكي في The Shattered World." },
-        { text: "ماذا قدم جوتسمان (1973) في دراسات الحالة العلاجية حسب الصفحة 83؟", options: ["نظرية جديدة", "أداة قياس", "معلومات عن تقدم المرضى خلال الجلسات", "تصميماً تجريبياً"], correct: 2, explanation: "الصفحة 83: قدم جوتسمان معلومات عن تقدم المرضى خلال سلسلة من الجلسات العلاجية." },
-        { text: "ما هي إحدى الحالات النادرة التي ذكرتها الصفحة 84 لدراسة الفرد الواحد؟", options: ["نزلات البرد", "الصداع النصفي", "اضطراب تعدد الشخصيات", "ارتفاع ضغط الدم"], correct: 2, explanation: "الصفحة 84: من الحالات النادرة اضطراب ازدواجية التوجه الجنسي وتعدد الشخصيات." },
-        { text: "ما المبرر الأخلاقي لاستخدام تصميمات الفرد الواحد كما في الصفحة 84؟", options: ["توفير الوقت", "تجنب حرمان مجموعة من علاج فعال", "توفير المال", "سهولة النشر"], correct: 1, explanation: "الصفحة 84: من المبررات الأخلاقية تجنب حرمان مجموعة كاملة من علاج فعال." },
-        { text: "ما الذي يعتبر نقطة مرجعية للمقارنة في تصميمات الفرد الواحد حسب الصفحة 85؟", options: ["القياس البعدي", "المجموعة الضابطة", "خط الأساس", "التحليل الإحصائي"], correct: 2, explanation: "الصفحة 85: خط الأساس هو نقطة مرجعية للمقارنة لمعرفة تأثير المتغير المستقل." },
-        { text: "ماذا تعني 'إعادة المحاكاة داخل الفرد' وفقاً للصفحة 86؟", options: ["تطبيق العلاج على أفراد مختلفين", "تكرار نمط خط الأساس والمعالجة مع نفس الشخص", "تغيير المعالج", "إلغاء القياسات"], correct: 1, explanation: "الصفحة 86: إعادة المحاكاة داخل الفرد تعني تكرار النمط مع نفس الشخص عدة مرات." },
-        { text: "ماذا تعني 'إعادة المحاكاة خارج الفرد' حسب الصفحة 86؟", options: ["تكرار النمط مع نفس الشخص", "تكرار النمط بين المشتركين", "تغيير أداة القياس", "تحليل البيانات"], correct: 1, explanation: "الصفحة 86: إعادة المحاكاة خارج الفرد هي نمط التكرار بين المشتركين أو المفحوصين." },
-        { text: "من أنماط خط الأساس التي ذكرتها الصفحة 87؟", options: ["خط الأساس العشوائي فقط", "خط الأساس المستقر والمتز والمتناقص والمتغير", "خط الأساس الطويل فقط", "خط الأساس القصير فقط"], correct: 1, explanation: "الصفحة 87: من أنماط خط الأساس المستقر والمتز والمتناقص والمتغير." },
-        { text: "ما المشكلة المنهجية التي تواجه الباحث عند خط الأساس المتذبذب؟", options: ["تزداد دقة النتائج", "يصعب الوصول إلى نمط ثابت وتفسير تأثير العلاج", "تقل مدة الدراسة", "يزداد عدد القياسات"], correct: 1, explanation: "الصفحة 87: التذبذب في خط الأساس يجعل من الصعب الوصول إلى نمط ثابت." },
-        { text: "ماذا يجب على الباحث فعله إذا كان خط الأساس غير مستقر؟", options: ["تطبيق العلاج فوراً", "إلغاء الدراسة", "أخذ عينة سلوكية طويلة بما يكفي لنمط ثابت", "تغيير المعالج"], correct: 2, explanation: "الصفحة 85: من الضروري أخذ عينة سلوكية طويلة بما يكفي للوصول إلى خط أساس ذو نمط ثابت." },
-        { text: "ما الذي يصفه مصطلح 'منحى السلسلة الزمنية' في تصميمات الفرد الواحد؟", options: ["قياس لمرة واحدة", "سلسلة قياسات متكررة قبل وأثناء وبعد التدخل", "مقارنة بين فترتين زمنيتين", "تحليل مقطعي"], correct: 1, explanation: "الصفحة 85: منحى السلسلة الزمنية يتضمن سلسلة قياسات لخط أساس أكثر اتزاناً." },
-        { text: "متى يكون تصميم خط الأساس المتعدد أكثر ملاءمة من التصميم العكسي؟", options: ["عندما يكون العلاج قابلاً للعكس", "عندما لا يمكن سحب العلاج لأسباب عملية أو أخلاقية", "عندما تكون العينة صغيرة", "عندما يكون القياس صعباً"], correct: 1, explanation: "الصفحة 87: خط الأساس المتعدد يستخدم عندما لا يمكن سحب العلاج." },
-        { text: "ما القاعدة الرئيسية في التصميمات التجريبية للفرد الواحد حسب الصفحة 85؟", options: ["تغيير المتغيرات كلها معاً", "تغيير المتغيرات المستقلة واحداً بعد الآخر", "تثبيت جميع المتغيرات", "تجاهل المتغيرات الدخيلة"], correct: 1, explanation: "الصفحة 85: القاعدة هي تغيير المتغيرات المستقلة واحداً بعد الآخر." },
-        { text: "ماذا يقصد بـ 'الاتفاق بين المراقبين' في قياس السلوك؟", options: ["اتفاق المعالج والعميل", "اتفاق مراقبين مستقلين على حدوث السلوك", "اتفاق الباحث والمشرف", "اتفاق المشاركين"], correct: 1, explanation: "الصفحة 50: الاتفاق بين المراقبين يعني ملاحظة نفس السلوك والاتفاق على حدوثه." },
-        { text: "لماذا يعتبر خط الأساس المستقر مهماً جداً في تصميمات الفرد الواحد؟", options: ["لأنه ينهي الدراسة", "لأنه يسمح بالتنبؤ بالأداء المستقبلي في غياب العلاج", "لأنه يقلل التكاليف", "لأنه يسرع النتائج"], correct: 1, explanation: "الصفحة 85: خط الأساس يعطي المنطق لكيفية ثبات المتغير التابع عندما يكون المتغير المستقل غير موجود." }
-    ];
-
-    let userAnswers = new Array(questions.length).fill(null);
-    let answerLocked = new Array(questions.length).fill(false);
-
-    function renderQuiz() {
-        const container = document.getElementById('quizContainer');
-        container.innerHTML = '';
-        questions.forEach((q, idx) => {
-            const card = document.createElement('div');
-            card.className = 'question-card';
-            card.id = `card-${idx}`;
-
-            const qDiv = document.createElement('div');
-            qDiv.className = 'question-text';
-            qDiv.innerHTML = `<span class="arabic-number">${arabicNumbers[idx]}</span> ${q.text}`;
-
-            const optsDiv = document.createElement('div');
-            optsDiv.className = 'options';
-            q.options.forEach((opt, optIdx) => {
-                const optSpan = document.createElement('div');
-                optSpan.className = 'opt';
-                optSpan.innerText = opt;
-                optSpan.dataset.optIndex = optIdx;
-                optSpan.addEventListener('click', () => {
-                    if (answerLocked[idx]) return;
-                    if (userAnswers[idx] !== null) {
-                        const prevSelected = card.querySelector(`.opt[data-opt-index='${userAnswers[idx]}']`);
-                        if (prevSelected) prevSelected.classList.remove('selected');
-                    }
-                    userAnswers[idx] = optIdx;
-                    optSpan.classList.add('selected');
-                    answerLocked[idx] = true;
-                    const allOpts = card.querySelectorAll('.opt');
-                    allOpts.forEach(o => o.classList.add('disabled-opt'));
-                });
-                optsDiv.appendChild(optSpan);
+        // عرض الأسئلة
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-card';
+                questionDiv.id = `question-${index}`;
+                
+                questionDiv.innerHTML = `
+                    <div class="question-text">
+                        <span style="background: #2a5298; color: white; padding: 2px 10px; border-radius: 20px; margin-left: 10px;">${index + 1}</span>
+                        ${q.text}
+                    </div>
+                    <div class="options" id="options-${index}">
+                        ${q.options.map((opt, optIdx) => `
+                            <div class="option" onclick="selectOption(${index}, '${opt.charAt(0)}', this)">
+                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" ${userAnswers[index] === opt.charAt(0) ? 'checked' : ''} onclick="event.stopPropagation()">
+                                <label>${opt}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <button class="btn-check-question" onclick="checkQuestion(${index})">✅ تصحيح هذا السؤال</button>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+                container.appendChild(questionDiv);
             });
-
-            const btnWrapper = document.createElement('div');
-            btnWrapper.className = 'check-btn-wrapper';
-            const checkBtn = document.createElement('div');
-            checkBtn.className = 'check-btn';
-            checkBtn.innerText = '🔍 تصحيح الإجابة';
-            const feedbackDiv = document.createElement('div');
-            feedbackDiv.className = 'feedback';
-            feedbackDiv.id = `feedback-${idx}`;
-
-            checkBtn.addEventListener('click', () => {
-                const selected = userAnswers[idx];
-                const fbDiv = document.getElementById(`feedback-${idx}`);
-                if (selected === null) {
-                    fbDiv.innerHTML = `⚠️ لم تختر إجابة بعد.`;
-                    fbDiv.className = 'feedback wrong';
-                } else if (selected === q.correct) {
-                    fbDiv.innerHTML = `✅ صحيح. ${q.explanation}`;
-                    fbDiv.className = 'feedback correct';
-                } else {
-                    const correctAns = q.options[q.correct];
-                    fbDiv.innerHTML = `❌ خطأ. الإجابة الصحيحة: "${correctAns}".<br> 📘 ${q.explanation}`;
-                    fbDiv.className = 'feedback wrong';
-                }
-                fbDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            });
-
-            btnWrapper.appendChild(checkBtn);
-            card.appendChild(qDiv);
-            card.appendChild(optsDiv);
-            card.appendChild(btnWrapper);
-            card.appendChild(feedbackDiv);
-            container.appendChild(card);
-        });
-    }
-
-    document.getElementById('submitFinalBtn').addEventListener('click', () => {
-        let score = 0;
-        for (let i = 0; i < questions.length; i++) {
-            if (userAnswers[i] !== null && userAnswers[i] === questions[i].correct) {
-                score++;
-            }
+            
+            updateStats();
         }
-        const resultDiv = document.getElementById('resultContainer');
-        const scoreDisplay = document.getElementById('scoreDisplay');
-        scoreDisplay.innerHTML = `🌟 درجتك: ${score} / 25 🌟`;
-        resultDiv.style.display = 'block';
-        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    });
 
-    function createBubbles() {
-        setInterval(() => {
-            const bubble = document.createElement('div');
-            const size = Math.random() * 40 + 15;
-            bubble.classList.add('bubble');
-            bubble.style.width = `${size}px`;
-            bubble.style.height = `${size}px`;
-            bubble.style.left = `${Math.random() * 100}%`;
-            bubble.style.animationDuration = `${Math.random() * 12 + 8}s`;
-            bubble.style.opacity = Math.random() * 0.5 + 0.2;
-            document.body.appendChild(bubble);
-            setTimeout(() => { if(bubble && bubble.remove) bubble.remove(); }, 15000);
-        }, 700);
-    }
-
-    renderQuiz();
-    createBubbles();
-</script>
+        // اختيار إجابة
+        window.selectOption = function(questionIndex, value, element) {
+            // لو السؤال تم تصحيحه بالفعل، منع التعديل
+            if (answerStatus[questionIndex] !== null) {
+                alert('⚠️ هذا السؤال تم تصحيحه بالفعل. إذا أردت تغيير إجابتك، اضغطي على "مسح الكل" وابدئي من جديد.');
+                return;
+            }
+            
+            userAnswers[questionIndex] = value;
+            
+            // إلغاء التحديد السابق وإعادة تعيين الخلفيات
+            const optionsDiv = document.getElementById(`options-${questionIndex}`);
+            const allOptions = optionsDiv.querySelectorAll('.option');
+            allOptions.forEach(opt => {
+                opt.classList.remove('correct-highlight', 'wrong-highlight');
+                const radio = opt.querySelector('input');
+                if (radio.value === value) {
+                    radio.checked = true;
+                } else if (radio.checked) {
+                    radio.checked = false;
+                }
+            });
+            
+            // إخفاء التعليق السابق
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            feedbackDiv.className = 'feedback';
+            feedbackDiv.innerHTML = '';
+            
+            updateStats();
+        };
+        
+        // تصحيح سؤال واحد فقط
+        window.checkQuestion = function(questionIndex) {
+            const userAnswer = userAnswers[questionIndex];
+            const correctAnswer = questions[questionIndex].correct;
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            const optionsDiv = document.getElementById(`options-${questionIndex}`);
+            const allOptions = optionsDiv.querySelectorAll('.option');
+            
+            if (!userAnswer) {
+                feedbackDiv.className = 'feedback wrong';
+                feedbackDiv.innerHTML = '⚠️ من فضلك اختاري إجابة أولاً قبل التصحيح.';
+                return;
+            }
+            
+            if (userAnswer === correctAnswer) {
+                answerStatus[questionIndex] = 'correct';
+                feedbackDiv.className = 'feedback correct';
+                feedbackDiv.innerHTML = `✅ صحيح! الإجابة الصحيحة هي ${correctAnswer}. ${getExplanation(questionIndex)}`;
+                
+                // تمييز الخيارات
+                allOptions.forEach(opt => {
+                    const radio = opt.querySelector('input');
+                    if (radio.value === correctAnswer) {
+                        opt.classList.add('correct-highlight');
+                    }
+                });
+            } else {
+                answerStatus[questionIndex] = 'wrong';
+                feedbackDiv.className = 'feedback wrong';
+                feedbackDiv.innerHTML = `❌ خطأ. الإجابة الصحيحة هي ${correctAnswer}. ${getExplanation(questionIndex)}`;
+                
+                // تمييز الخيارات
+                allOptions.forEach(opt => {
+                    const radio = opt.querySelector('input');
+                    if (radio.value === correctAnswer) {
+                        opt.classList.add('correct-highlight');
+                    }
+                    if (radio.value === userAnswer && radio.value !== correctAnswer) {
+                        opt.classList.add('wrong-highlight');
+                    }
+                });
+            }
+            
+            // تحديث الإحصائيات
+            updateStatsFromStatus();
+        };
+        
+        // شرح مبسط للإجابات الصحيحة
+        function getExplanation(questionIndex) {
+            const explanations = {
+                0: "التعزيز السلبي يزيل مثيراً منفراً (مثل الصوت المزعج) مما يزيد السلوك. العقاب بالسحب يزيل مثيراً معززاً (مثل اللعبة) مما يقلل السلوك.",
+                1: "في فترة ثابتة، الاستجابات تكون قليلة بعد التعزيز مباشرة، ثم تزداد تدريجياً مع اقتراب نهاية الفترة.",
+                2: "CMO-R مثل ضوء التحذير يجعل الهروب معززاً لأنه يشير إلى مثير منفر قادم.",
+                3: "انفجار الإطفاء هو زيادة مؤقتة في السلوك عند بدء تطبيق الإطفاء.",
+                4: "النسبة المتغيرة (VR) تنتج أعلى وأثبت معدل استجابة لأن المعزز يأتي بعد عدد غير متوقع من الاستجابات.",
+                5: "في DRA، يتم تعزيز السلوك البديل مباشرة مع إطفاء السلوك المشكلة.",
+                6: "المعاقب الفعال لا يحتاج إلى مثير تحذيري؛ بل يُقدم مباشرة.",
+                7: "الفرق الأساسي هو الإضافة (إيجابي) مقابل الإزالة (سلبي).",
+                8: "SD يخبرنا أن التعزيز متاح الآن لسلوك معين.",
+                9: "قانون المطابقة يصف كيف يوزع الكائن استجاباته بين البدائل المتاحة.",
+                10: "العجز السلوكي هو سلوك مرغوب يحدث بمعدل أقل من المطلوب.",
+                11: "العقاب السلبي يتضمن إزالة معزز (اللعب) بعد سلوك غير مرغوب.",
+                12: "كل 3 استجابات = نسبة ثابتة (FR3).",
+                13: "MOs تغير من قيمة المعزز ومن السلوك الذي ينتجه.",
+                14: "التعزيز الجزئي يجعل السلوك أكثر مقاومة للإطفاء.",
+                15: "التشكيل يعتمد على تعزيز التقريبات المتتالية، وليس السلوك النهائي مباشرة.",
+                16: "التسلسل الأمامي يبدأ من الخطوة الأولى ويتقدم للأمام.",
+                17: "التسلسل الخلفي: المدرب يكمل كل شيء والمتعلم يقوم بالخطوة الأخيرة فقط أولاً.",
+                18: "اقتصاد البونات قائم على التعزيز الشرطي المعمم (البونات ترتبط بمعززات متعددة).",
+                19: "البونات تُقدم في البداية بعد كل سلوك مرغوب (جدول مستمر).",
+                20: "تكلفة الاستجابة: سحب كمية محددة من التعزيز بعد سلوك غير مرغوب.",
+                21: "التشكيل يخلق سلوكاً جديداً لم يكن موجوداً؛ التسلسل يربط سلوكيات موجودة بالفعل.",
+                22: "الإنتاج = القدرة على أداء السلوك جسدياً ومعرفياً.",
+                23: "النموذج الكفء والمرموق أكثر تأثيراً في التعلم بالملاحظة.",
+                24: "التعزيز بالنيابة: أتعلم لأني رأيت غيري يُكافأ.",
+                25: "تحليل المهمة لا يحذف التعليمات اللفظية؛ بل قد يشملها.",
+                26: "التسلسل الخلفي يعطي المتعلم شعوراً بالإنجاز فور إكمال الخطوة الأخيرة.",
+                27: "معيار التعزيز يُغير فقط بعد أن يتقن المتعلم المعيار الحالي.",
+                28: "التصحيح المفرط: عقاب بجعل الشخص يعيد الموقف بشكل مبالغ فيه.",
+                29: "منع الاستجابة + التعرض = علاج قياسي لعلاج الوسواس القهري."
+            };
+            return explanations[questionIndex] || "راجعي المادة العلمية لتثبيت المعلومة.";
+        }
+        
+        // تحديث الإحصائيات بناءً على answerStatus
+        function updateStatsFromStatus() {
+            let correct = 0;
+            let wrong = 0;
+            let answered = 0;
+            
+            for (let i = 0; i < questions.length; i++) {
+                if (answerStatus[i] === 'correct') {
+                    correct++;
+                    answered++;
+                } else if (answerStatus[i] === 'wrong') {
+                    wrong++;
+                    answered++;
+                }
+            }
+            
+            document.getElementById('correctCount').innerText = correct;
+            document.getElementById('wrongCount').innerText = wrong;
+            document.getElementById('answeredCount').innerText = answered;
+            
+            const progress = (answered / questions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+        }
+        
+        // تحديث الإحصائيات من userAnswers فقط (قبل التصحيح)
+        function updateStats() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            document.getElementById('answeredCount').innerText = answered;
+            
+            const progress = (answered / questions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+        }
+        
+        // تصحيح جميع الإجابات دفعة واحدة
+        window.checkAllAnswers = function() {
+            let correct = 0;
+            let wrong = 0;
+            
+            for (let i = 0; i < questions.length; i++) {
+                // لو السؤال تم تصحيحه قبل كده، نتخطاه عشان نحافظ على التصحيح السابق
+                if (answerStatus[i] !== null) {
+                    if (answerStatus[i] === 'correct') correct++;
+                    else if (answerStatus[i] === 'wrong') wrong++;
+                    continue;
+                }
+                
+                const userAnswer = userAnswers[i];
+                const correctAnswer = questions[i].correct;
+                const feedbackDiv = document.getElementById(`feedback-${i}`);
+                const optionsDiv = document.getElementById(`options-${i}`);
+                const allOptions = optionsDiv.querySelectorAll('.option');
+                
+                if (!userAnswer) {
+                    answerStatus[i] = null;
+                    feedbackDiv.className = 'feedback';
+                    feedbackDiv.innerHTML = '<span style="color: #856404;">⚠️ لم يتم الإجابة على هذا السؤال</span>';
+                    continue;
+                }
+                
+                if (userAnswer === correctAnswer) {
+                    correct++;
+                    answerStatus[i] = 'correct';
+                    feedbackDiv.className = 'feedback correct';
+                    feedbackDiv.innerHTML = `✅ صحيح! الإجابة الصحيحة هي ${correctAnswer}. ${getExplanation(i)}`;
+                    
+                    allOptions.forEach(opt => {
+                        const radio = opt.querySelector('input');
+                        if (radio.value === correctAnswer) {
+                            opt.classList.add('correct-highlight');
+                        }
+                    });
+                } else {
+                    wrong++;
+                    answerStatus[i] = 'wrong';
+                    feedbackDiv.className = 'feedback wrong';
+                    feedbackDiv.innerHTML = `❌ خطأ. الإجابة الصحيحة هي ${correctAnswer}. ${getExplanation(i)}`;
+                    
+                    allOptions.forEach(opt => {
+                        const radio = opt.querySelector('input');
+                        if (radio.value === correctAnswer) {
+                            opt.classList.add('correct-highlight');
+                        }
+                        if (radio.value === userAnswer && radio.value !== correctAnswer) {
+                            opt.classList.add('wrong-highlight');
+                        }
+                    });
+                }
+            }
+            
+            quizChecked = true;
+            
+            document.getElementById('correctCount').innerText = correct;
+            document.getElementById('wrongCount').innerText = wrong;
+            
+            const percentage = (correct / questions.length) * 100;
+            const resultCard = document.getElementById('resultCard');
+            resultCard.style.display = 'block';
+            document.getElementById('finalScore').innerHTML = `${correct} / ${questions.length}`;
+            
+            let feedbackText = '';
+            if (percentage >= 90) feedbackText = '🎉 ممتاز! مستوى متميز جداً. إتقانك للمادة ممتاز. استمري بهذا المستوى.';
+            else if (percentage >= 75) feedbackText = '🌟 جيد جداً! أداء قوي. راجعي الأخطاء البسيطة لتحصلي على الدرجة النهائية.';
+            else if (percentage >= 60) feedbackText = '📖 أداء مقبول. تحتاجين مراجعة أعمق للمفاهيم التي أخطأت فيها.';
+            else feedbackText = '📚 تحتاجين مذاكرة أكثر. راجعي الفصلين مرة أخرى وركزي على النقاط التي أخطأت فيها.';
+            
+            document.getElementById('finalFeedback').innerHTML = feedbackText;
+            
+            resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        };
+        
+        // إعادة تعيين الاختبار بالكامل
+        window.resetQuiz = function() {
+            userAnswers = new Array(questions.length).fill(null);
+            answerStatus = new Array(questions.length).fill(null);
+            quizChecked = false;
+            
+            renderQuestions();
+            
+            document.getElementById('correctCount').innerText = '0';
+            document.getElementById('wrongCount').innerText = '0';
+            document.getElementById('resultCard').style.display = 'none';
+        };
+        
+        // بدء التطبيق
+        renderQuestions();
+    </script>
 </body>
 </html>
