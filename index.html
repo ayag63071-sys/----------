@@ -1,637 +1,380 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار تعديل السلوك - الفصل الخامس والسادس</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Alkaloids Quiz | Interactive Glassmorphism Assessment</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Poppins', sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', 'Tahoma', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
-            padding: 20px;
+            background: radial-gradient(circle at 10% 30%, rgba(15, 25, 45, 0.95), rgba(5, 12, 24, 1));
+            background-attachment: fixed;
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .container {
-            max-width: 900px;
+        /* glass container */
+        .quiz-wrapper {
+            max-width: 1100px;
+            width: 100%;
             margin: 0 auto;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 0.5px rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.2s ease;
         }
 
-        .header {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 25px;
+        /* header section */
+        .quiz-header {
+            padding: 1.8rem 2rem;
+            background: rgba(10, 20, 35, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .header h1 {
-            color: #1e3c72;
-            font-size: 28px;
-            margin-bottom: 10px;
+        .quiz-header h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #FFFFFF, #C0E0FF, #A0C0FF);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        .header p {
-            color: #666;
-            font-size: 16px;
+        .quiz-header p {
+            color: rgba(220, 240, 255, 0.85);
+            margin-top: 0.5rem;
+            font-weight: 400;
+            font-size: 1rem;
         }
 
-        .stats {
+        .stats-bar {
             display: flex;
             justify-content: space-between;
-            background: white;
-            border-radius: 15px;
-            padding: 15px 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 0.8rem 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .stats div {
-            text-align: center;
+        .progress-text {
+            background: rgba(255,255,240,0.15);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(4px);
         }
 
-        .stats span:first-child {
-            font-size: 14px;
-            color: #666;
-            display: block;
-        }
-
-        .stats .number {
-            font-size: 28px;
-            font-weight: bold;
-            color: #2a5298;
-        }
-
-        .progress-bar {
-            background: #e0e0e0;
-            border-radius: 10px;
-            height: 10px;
-            margin-bottom: 25px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            background: linear-gradient(90deg, #2a5298, #4c9aff);
-            width: 0%;
-            height: 100%;
-            transition: width 0.3s ease;
+        /* question cards grid */
+        .questions-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            padding: 2rem 2rem;
         }
 
         .question-card {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            transition: transform 0.2s;
+            background: rgba(20, 30, 50, 0.55);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+            padding: 1.2rem 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
         .question-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            border-color: rgba(255, 200, 150, 0.5);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+            background: rgba(30, 40, 65, 0.65);
         }
 
-        .question-text {
-            font-size: 18px;
+        .q-text {
+            color: #F0F3FA;
             font-weight: 600;
-            color: #1e3c72;
-            margin-bottom: 20px;
-            line-height: 1.5;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            letter-spacing: -0.2px;
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+        }
+
+        .q-num {
+            background: rgba(255,215,150,0.8);
+            color: #1A2A3A;
+            border-radius: 40px;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.85rem;
         }
 
         .options {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 0.8rem 0 1rem 0;
         }
 
         .option {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            background: #f8f9fa;
-            border-radius: 12px;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
             cursor: pointer;
-            transition: all 0.2s;
-            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
         .option:hover {
-            background: #e9ecef;
-            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(0.98);
         }
 
         .option input {
-            width: 20px;
-            height: 20px;
+            accent-color: #7bc5ff;
+            width: 18px;
+            height: 18px;
             cursor: pointer;
-            accent-color: #2a5298;
         }
 
         .option label {
-            flex: 1;
+            color: #eef3ff;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 15px;
-            color: #333;
-            line-height: 1.4;
+            font-size: 0.95rem;
         }
 
-        .option.correct-highlight {
-            background: #d4edda;
-            border-color: #28a745;
+        .check-btn {
+            background: rgba(210, 230, 255, 0.15);
+            border: 1px solid rgba(255,215,140,0.7);
+            color: #FFE5B4;
+            padding: 0.45rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            backdrop-filter: blur(4px);
         }
 
-        .option.wrong-highlight {
-            background: #f8d7da;
-            border-color: #dc3545;
+        .check-btn:hover {
+            background: #ffd96680;
+            color: #0a1a2a;
+            border-color: #fff0c0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .feedback {
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 14px;
-            display: none;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            padding: 6px 12px;
+            border-radius: 50px;
+            display: inline-block;
+            background: rgba(0,0,0,0.4);
+            font-weight: 500;
+            transition: 0.1s;
         }
 
         .feedback.correct {
-            background: #d4edda;
-            color: #155724;
-            display: block;
+            color: #B5FFB5;
+            background: rgba(40, 100, 40, 0.6);
+            border-left: 3px solid #8aff80;
+            padding-left: 16px;
         }
 
         .feedback.wrong {
-            background: #f8d7da;
-            color: #721c24;
-            display: block;
+            color: #FFB5B5;
+            background: rgba(120, 40, 40, 0.6);
+            border-left: 3px solid #ff8080;
         }
 
-        .btn-check-question {
-            background: #2a5298;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: all 0.3s;
+        hr {
+            border-color: rgba(255,255,255,0.1);
+            margin: 0.5rem 0;
         }
 
-        .btn-check-question:hover {
-            background: #1e3c72;
-            transform: scale(1.02);
-        }
-
-        .button-group {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 30px 0;
-        }
-
-        button {
-            padding: 12px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-check-all {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn-check-all:hover {
-            background: #218838;
-            transform: scale(1.05);
-        }
-
-        .btn-reset {
-            background: #6c757d;
-            color: white;
-        }
-
-        .btn-reset:hover {
-            background: #5a6268;
-            transform: scale(1.05);
-        }
-
-        .result-card {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
+        .footer-note {
             text-align: center;
-            margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            display: none;
+            padding: 1rem 2rem 2rem;
+            color: #b8d0ff;
+            font-size: 0.8rem;
         }
 
-        .result-card h2 {
-            color: #1e3c72;
-            margin-bottom: 15px;
-        }
-
-        .score {
-            font-size: 48px;
-            font-weight: bold;
-            color: #2a5298;
-            margin: 15px 0;
-        }
-
-        .feedback-text {
-            color: #666;
-            margin-top: 15px;
-            line-height: 1.6;
-        }
-
-        footer {
-            text-align: center;
-            color: rgba(255,255,255,0.7);
-            margin-top: 30px;
-            font-size: 14px;
-        }
-
-        @media (max-width: 600px) {
-            .question-text {
-                font-size: 16px;
+        @media (max-width: 750px) {
+            .questions-grid {
+                padding: 1rem;
             }
-            .option label {
-                font-size: 13px;
+            .question-card {
+                padding: 1rem;
             }
-            .stats .number {
-                font-size: 20px;
+            .options {
+                gap: 0.6rem;
+            }
+            .option {
+                padding: 0.3rem 0.9rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 اختبار تعديل السلوك والعلاج السلوكي</h1>
-            <p>الفصل الخامس: نظريات التعلم الإجرائي والاجتماعي | الفصل السادس: التقنيات المتقدمة</p>
-            <p style="font-size: 14px; color: #888; margin-top: 10px;">30 سؤالاً - اختاري الإجابة ثم اضغطي "تصحيح" تحت كل سؤال</p>
-        </div>
-
-        <div class="stats">
-            <div>
-                <span>✅ تم الإجابة</span>
-                <span class="number" id="answeredCount">0</span>
-            </div>
-            <div>
-                <span>📊 الإجابات الصحيحة</span>
-                <span class="number" id="correctCount">0</span>
-            </div>
-            <div>
-                <span>❌ الإجابات الخاطئة</span>
-                <span class="number" id="wrongCount">0</span>
-            </div>
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
-
-        <div id="questionsContainer"></div>
-
-        <div class="button-group">
-            <button class="btn-check-all" onclick="checkAllAnswers()">📝 تصحيح جميع الأسئلة</button>
-            <button class="btn-reset" onclick="resetQuiz()">🔄 مسح الكل وبدء جديد</button>
-        </div>
-
-        <div class="result-card" id="resultCard">
-            <h2>🏆 نتيجة الاختبار</h2>
-            <div class="score" id="finalScore">0 / 30</div>
-            <div class="feedback-text" id="finalFeedback"></div>
-        </div>
-
-        <footer>
-            <p>الأسئلة مبنية على المحتوى العلمي للكتاب | المستوى: صعب | عدد الأسئلة: 30</p>
-        </footer>
+<div class="quiz-wrapper">
+    <div class="quiz-header">
+        <h1>🌿 ALKALOIDS · MASTER QUIZ</h1>
+        <p>Based on lecture: True alkaloids, pseudoalkaloids, properties, extraction & classification</p>
     </div>
+    <div class="stats-bar">
+        <span>🧪 30 interactive questions</span>
+        <span>✨ Click "Check" under each question → instant feedback</span>
+        <span class="progress-text">✓ self-paced · glassmorphic design</span>
+    </div>
+    <div class="questions-grid" id="questionsContainer"></div>
+    <div class="footer-note">
+        ⚗️ each answer validated from your alkaloid notes | beautiful & reactive UI
+    </div>
+</div>
 
-    <script>
-        // بيانات الأسئلة والإجابات الصحيحة
-        const questions = [
-            { text: "أي من العبارات التالية يصف بشكل أفضل الفرق بين التعزيز السلبي والعقاب بالسحب؟", options: ["A) التعزيز السلبي يزيد السلوك عن طريق إزالة مثير منفر، بينما العقاب بالسحب يقلل السلوك عن طريق إزالة مثير معزز", "B) التعزيز السلبي يقلل السلوك عن طريق إزالة مثير منفر، بينما العقاب بالسحب يزيد السلوك عن طريق إزالة مثير معزز", "C) كلاهما يتضمن إزالة مثير، لكن التعزيز السلبي يتبع سلوكاً غير مرغوب بينما العقاب يتبع سلوكاً مرغوباً", "D) لا يوجد فرق وظيفي؛ المصطلحات قابلة للتبادل"], correct: "A" },
-            { text: "في جدول التعزيز ذو الفترة الثابتة (FI)، النمط النموذجي للاستجابة يتميز بـ:", options: ["A) معدل مرتفع وثابت من الاستجابات مع عدم وجود توقف بعد التعزيز", "B) معدل منخفض من الاستجابات يتبعه زيادة تدريجية مع اقتراب نهاية الفترة", "C) معدل مرتفع جداً من الاستجابات فوراً بعد التعزيز", "D) معدل منخفض بشكل منتظم طوال الفترة بأكملها"], correct: "B" },
-            { text: "أي من التالي مثال على عملية التحفيز الشرطية - الانعكاسية (CMO-R)؟", options: ["A) الشعور بالجوع الذي يزيد من قيمة الطعام", "B) ضوء تحذيري يشير إلى اقتراب مثير منفر، مما يجعل سلوكيات الهروب أكثر تعزيزاً", "C) غياب أداة مطلوبة مما يجعل الحصول على تلك الأداة معززاً", "D) رمز تم اقترانه مع معززات خلفية"], correct: "B" },
-            { text: "انفجار الإطفاء (Extinction burst) يشير إلى:", options: ["A) الاختفاء الدائم للسلوك بعد سحب التعزيز", "B) زيادة مؤقتة في تكرار أو شدة أو مدة السلوك عند تطبيق الإطفاء لأول مرة", "C) العودة التلقائية للسلوك بعد الإطفاء بدون تعزيز", "D) تعميم الإطفاء إلى سلوكيات أخرى"], correct: "B" },
-            { text: "أي جدول من جداول التعزيز ينتج أعلى وأثبت معدل من الاستجابات مع عدم وجود توقف تقريباً بعد التعزيز؟", options: ["A) النسبة الثابتة (FR)", "B) الفترة الثابتة (FI)", "C) النسبة المتغيرة (VR)", "D) الفترة المتغيرة (VI)"], correct: "C" },
-            { text: "عند استخدام التعزيز التفاضلي للسلوك البديل (DRA)، ما هو المطلب الإجرائي الحاسم؟", options: ["A) يجب أن يكون السلوك البديل غير متوافق مع السلوك المشكلة", "B) يتم تقديم التعزيز لغياب السلوك المشكلة لفترة زمنية محددة", "C) يتم تقديم التعزيز لسلوك بديل محدد مع وضع السلوك المشكلة تحت الإطفاء", "D) يتم تعزيز السلوك المشكلة على جدول خفيف بينما يتم تعزيز السلوك البديل على جدول كثيف"], correct: "C" },
-            { text: "أي من التالي ليس من خصائص المعاقب الفعال؟", options: ["A) يتم تقديمه فوراً بعد السلوك", "B) يكون شديداً بما يكفي لقمع السلوك في البداية", "C) يتم تقديمه باستمرار في كل مرة يحدث فيها السلوك", "D) يتم تقديمه بعد تقديم مثير تحذيري"], correct: "D" },
-            { text: "الفرق الأساسي بين التعزيز الإيجابي والتعزيز السلبي هو:", options: ["A) التعزيز الإيجابي يزيد السلوك؛ التعزيز السلبي يقلل السلوك", "B) التعزيز الإيجابي يتضمن إضافة مثير؛ التعزيز السلبي يتضمن إزالة مثير", "C) التعزيز الإيجابي يستخدم معززات أولية؛ التعزيز السلبي يستخدم معززات شرطية", "D) التعزيز الإيجابي أكثر فعالية من التعزيز السلبي"], correct: "B" },
-            { text: "المثير التمييزي (SD) يشير إلى أن:", options: ["A) السلوك لن يتم تعزيزه", "B) التعزيز متاح لسلوك معين", "C) مثير منفر على وشك الحدوث بغض النظر عن السلوك", "D) قيمة المعزز قد تغيرت"], correct: "B" },
-            { text: "أي من التالي يصف بشكل أفضل قانون المطابقة (Matching Law)؟", options: ["A) معدل الاستجابة يطابق معدل التعزيز لكل بديل في موقف الاختيار", "B) شدة الاستجابة تطابق مقدار المعزز", "C) مدة السلوك تطابق جدول التعزيز", "D) هيئة السلوك تطابق المثير التمييزي"], correct: "A" },
-            { text: "في تعديل السلوك، العجز السلوكي (Behavioral deficit) يشير إلى:", options: ["A) سلوك يحدث بشكل متكرر جداً", "B) سلوك مرغوب يحدث بشكل نادر جداً", "C) سلوك غير مناسب للنمو", "D) سلوك يسبب ضرراً للآخرين"], correct: "B" },
-            { text: "أي من التالي مثال على العقاب السلبي؟", options: ["A) إعطاء طفل وقت مستقطع (فترة هدوء) من وقت اللعب لأنه ضرب", "B) إعطاء طفل أعمالاً منزلية إضافية لأنه تحدث بوقاحة", "C) مدح طفل لإنهائه الواجب", "D) إزالة صوت عالٍ عندما يربط الطفل حزام الأمان"], correct: "A" },
-            { text: "معلم يريد زيادة سلوك رفع اليد. يعطي ملصقاً لكل 3 مرات يرفع فيها الطالب يده. هذا يُعتبر جدول:", options: ["A) فترة ثابتة (FI)", "B) نسبة متغيرة (VR)", "C) نسبة ثابتة (FR)", "D) فترة متغيرة (VI)"], correct: "C" },
-            { text: "أي من العبارات التالية عن عمليات التحفيز (MOs) صحيح؟", options: ["A) عمليات التحفيز تؤثر فقط على السلوك من خلال تأثيرها على المثيرات التمييزية", "B) عمليات التحفيز تغير الفعالية الحالية للمعززات وتكرار السلوكيات التي تنتجها", "C) عمليات التحفيز غير شرطية ولا يمكن تعلمها", "D) عمليات التحفيز فقط تزيد السلوك؛ ولا تقلله أبداً"], correct: "B" },
-            { text: "تأثير الإطفاء للتعزيز الجزئي (PREE) يشير إلى اكتشاف أن:", options: ["A) السلوكيات المعززة على جدول مستمر أكثر مقاومة للإطفاء", "B) السلوكيات المعززة على جدول جزئي أكثر مقاومة للإطفاء", "C) التعزيز الجزئي ينتج إطفاء أسرع من التعزيز المستمر", "D) الإطفاء يحدث فقط عندما يكون التعزيز جزئياً"], correct: "B" },
-            { text: "في تشكيل (Shaping) سلوك جديد، ما هو المبدأ الأكثر أهمية للاتباع؟", options: ["A) تعزيز السلوك النهائي المستهدف من البداية", "B) تعزيز التقريبات المتتالية نحو السلوك المستهدف", "C) معاقبة جميع الاستجابات التي ليست السلوك النهائي", "D) استخدام معززات أولية فقط طوال العملية"], correct: "B" },
-            { text: "أي من التالي مثال على التسلسل الأمامي (Forward chaining)؟", options: ["A) تعليم الخطوة الأخيرة أولاً، ثم التي تسبقها، وهكذا", "B) تعليم الخطوة الأولى، ثم الأولى والثانية معاً، ثم الأولى والثانية والثالثة", "C) تعليم جميع الخطوات في وقت واحد حتى يكتمل التسلسل", "D) تعزيز فقط الخطوة النهائية من التسلسل"], correct: "B" },
-            { text: "في التسلسل الخلفي (Backward chaining)، المدرب عادةً:", options: ["A) يبدأ بالخطوة الأولى ويتحرك للأمام", "B) يكمل جميع الخطوات ما عدا الأخيرة، ويجعل المتعلم يكمل الخطوة الأخيرة", "C) يكمل جميع الخطوات ما عدا الأولى، ويجعل المتعلم يكمل الخطوة الأولى", "D) يجعل المتعلم يكمل جميع الخطوات بشكل مستقل من البداية"], correct: "B" },
-            { text: "اقتصاد البونات (Token economy) يقوم على مبدأ:", options: ["A) التشريط الكلاسيكي فقط", "B) التعزيز الشرطي المعمم", "C) العقاب بالسحب", "D) التعلم بالملاحظة فقط"], correct: "B" },
-            { text: "أي من التالي هو مكون حاسم لاقتصاد بونات ناجح؟", options: ["A) يتم تقديم البونات على جدول مستمر في البداية", "B) لا يتم استبدال البونات أبداً بمعززات خلفية", "C) المعززات الخلفية غير معروفة للمشاركين", "D) يتم تقديم البونات بعد تأخير لتعليم الصبر"], correct: "A" },
-            { text: "تكلفة الاستجابة (Response cost) هي إجراء ي:", options: ["A) يضيف مثيراً منفراً بعد السلوك", "B) يزيل كمية محددة من التعزيز بعد السلوك", "C) يقدم تعزيزاً لغياب السلوك", "D) يغير معيار التعزيز تدريجياً"], correct: "B" },
-            { text: "أي من التالي يصف بشكل أفضل الفرق بين التسلسل (Chaining) والتشكيل (Shaping)؟", options: ["A) التشكيل يخلق سلوكيات جديدة؛ التسلسل يربط سلوكيات موجودة", "B) التسلسل يخلق سلوكيات جديدة؛ التشكيل يربط سلوكيات موجودة", "C) التشكيل يستخدم التعزيز؛ التسلسل لا يستخدمه", "D) التسلسل يستخدم فقط للسلوكيات الحركية؛ التشكيل للسلوكيات اللفظية"], correct: "A" },
-            { text: "في التعلم بالملاحظة، العملية الفرعية للإنتاج (Reproduction) تشير إلى:", options: ["A) قدرة المتعلم على الانتباه إلى النموذج", "B) قدرة المتعلم على تذكر السلوك المرصود", "C) قدرة المتعلم الجسدية والمعرفية على أداء السلوك المرصود", "D) رغبة المتعلم في أداء السلوك المرصود"], correct: "C" },
-            { text: "أي عامل ثبت أنه يزيد من فعالية النموذج في التعلم بالملاحظة؟", options: ["A) النموذج ذو مكانة أقل من المراقب", "B) النموذج يُنظر إليه على أنه كفء ومرموق", "C) سلوك النموذج لا يتم تعزيزه", "D) ليس للمراقب علاقة سابقة بالنموذج"], correct: "B" },
-            { text: "التعزيز بالنيابة (Vicarious reinforcement) يحدث عندما:", options: ["A) يتم تعزيز المراقب مباشرة لتقليده النموذج", "B) يتغير سلوك المراقب بعد رؤية سلوك النموذج يتم تعزيزه", "C) يتم معاقبة النموذج على سلوكه", "D) يتم تعزيز المراقب والنموذج في نفس الوقت"], correct: "B" },
-            { text: "أي من التالي ليس مكوناً أساسياً لتحليل المهمة (Task analysis) من أجل التسلسل؟", options: ["A) تحديد جميع الخطوات المكونة للسلوك", "B) ترتيب الخطوات في تسلسل منطقي", "C) تحديد المعزز المناسب للمتعلم", "D) حذف جميع التعليمات اللفظية أثناء التدريب"], correct: "D" },
-            { text: "الميزة الرئيسية لاستخدام التسلسل الخلفي على التسلسل الأمامي هي:", options: ["A) يتطلب مساعدة أقل من المدرب", "B) يسمح للمتعلم بتجربة التعزيز الفوري لإكمال التسلسل", "C) أسرع في التطبيق", "D) لا يتطلب تحليل مهمة"], correct: "B" },
-            { text: "في التشكيل (Shaping)، يجب تغيير معيار التعزيز:", options: ["A) فقط عندما يتقن المتعلم السلوك النهائي", "B) بعد أن يتقن المتعلم المعيار الحالي باستمرار", "C) كل جلسة بغض النظر عن الأداء", "D) فقط عندما يرتكب المتعلم أخطاء"], correct: "B" },
-            { text: "أي من التالي مثال على التصحيح المفرط (Overcorrection) كإجراء منفر؟", options: ["A) إزالة بونات مقابل سلوك تخريبي", "B) جعل طالب ينظف الفصل بأكمله بعد أن يتسبب في فوضى صغيرة", "C) مدح طالب على سلوك مناسب", "D) تجاهل سلوك جذب الانتباه"], correct: "B" },
-            { text: "عملية التعرض مع منع الاستجابة (ERP) تستخدم بشكل شائع لعلاج:", options: ["A) الاكتئاب", "B) اضطراب الوسواس القهري (OCD)", "C) اضطراب القلق الاجتماعي", "D) الرهاب المحدد"], correct: "B" }
-        ];
+<script>
+    // ----- 30 MCQ questions extracted from the provided Alkaloids PDF content -----
+    const questionsData = [
+        { text: "What is the characteristic feature of 'True Alkaloids'?", options: ["Nitrogen in a side chain only", "Basic heterocyclic nitrogen, derived from amino acids, precipitated by alkaloidal reagents", "Always non-basic and liquid", "Derived from purine metabolism"], correct: 1, explanation: "True alkaloids have N in heterocyclic ring, biosynthesized from amino acids, and give precipitate with alkaloidal reagents." },
+        { text: "Which of the following is considered a 'Pseudo alkaloid'?", options: ["Ephedrine", "Morphine", "Steroidal alkaloids & Purine alkaloids", "Colchicine"], correct: 2, explanation: "Pseudoalkaloids are not derived from amino acids but have N in a heterocyclic ring, e.g., steroidal and purine alkaloids." },
+        { text: "Ephedrine is an example of:", options: ["True alkaloid", "Protoalkaloid (atypical) because N in side chain", "False alkaloid", "Steroidal alkaloid"], correct: 1, explanation: "Ephedrine has N in a side chain, lacks heterocyclic ring, thus atypical / protoalkaloid." },
+        { text: "Which plant family is NOT commonly associated with alkaloid occurrence according to the notes?", options: ["Solanaceae", "Papaveraceae", "Poaceae (Grasses)", "Apocyanaceae"], correct: 2, explanation: "Apocyanaceae, Papaveraceae, Solanaceae, Fabaceae etc. are listed; Poaceae is not major alkaloid family." },
+        { text: "In which plant part do Cinchona alkaloids mainly accumulate?", options: ["Leaves", "Seeds", "Bark", "Latex"], correct: 2, explanation: "Cinchona alkaloids (quinine) stored in bark (leaves → bark)." },
+        { text: "What is a speculated role of alkaloids in plants?", options: ["Nitrogen waste", "Protection against herbivores and insects", "Only pigmentation", "Water absorption"], correct: 1, explanation: "Protection against insects, grazing cattle, nitrogen reserve, growth regulator etc." },
+        { text: "Which form of alkaloid is water-soluble and sparingly soluble in organic solvents?", options: ["Free base", "N-oxide", "Alkaloidal salt", "Gluco-alkaloid"], correct: 2, explanation: "Alkaloidal salts are soluble in water, free bases soluble in organic solvents." },
+        { text: "Quaternary alkaloids contain:", options: ["Neutral nitrogen", "R₄N⁺ X⁻ (positive charge)", "No nitrogen", "Lactone ring"], correct: 1, explanation: "Quaternary ammonium form (R₄N⁺ X⁻) carries permanent positive charge." },
+        { text: "Which alkaloid is a volatile liquid due to lack of oxygen?", options: ["Morphine", "Quinine", "Coniine", "Berberine"], correct: 2, explanation: "Coniine and nicotine are volatile liquids; oxygen-free alkaloids volatile." },
+        { text: "Colchicine is considered a 'pseudo alkaloid' because:", options: ["It contains no nitrogen", "It is not derived from amino acids but has N in heterocyclic ring and weakly basic", "It is synthetic", "It is a glycoside"], correct: 1, explanation: "Colchicine is not derived from amino acids but has N heterocyclic, weakly basic → pseudo alkaloid." },
+        { text: "Which reagent gives orange precipitate with alkaloids?", options: ["Mayer's reagent", "Dragendorff's reagent", "Wagner's reagent", "Hager's reagent"], correct: 1, explanation: "Dragendorff's reagent (potassium bismuth iodide) → orange ppt." },
+        { text: "Morphine contains which functional group making it amphoteric?", options: ["Carboxyl group", "Phenolic OH group", "Ketone", "Ester"], correct: 1, explanation: "Amphoteric alkaloids have COOH or phenolic OH, morphine has phenolic OH group." },
+        { text: "Atropine can be converted to Apoatropine by:", options: ["Conc. acids causing dehydration", "Alkaline hydrolysis", "Reduction", "Oxidation"], correct: 0, explanation: "Concentrated acids cause dehydration: Atropine → Apoatropine." },
+        { text: "Why is strong alkali (NaOH) sometimes avoided during extraction?", options: ["It causes racemization of all alkaloids", "It may hydrolyze ester alkaloids (e.g., atropine, cocaine)", "It increases solubility in water", "It destroys all alkaloids"], correct: 1, explanation: "Strong alkalis hydrolyze ester alkaloids (atropine, cocaine) and amide alkaloids." },
+        { text: "Method I of extraction uses:", options: ["Acidic water to extract salts", "Alkali to liberate free bases then extracted with organic solvent", "Steam distillation only", "Methanol alone"], correct: 1, explanation: "Method I: Ground plant + alkali → extract with CHCl₃ (free bases)." },
+        { text: "The Soxhlet apparatus is based on principle of:", options: ["Simple maceration", "Countercurrent extraction", "Vacuum filtration", "Reflux distillation only"], correct: 1, explanation: "Soxhlet uses solid-liquid countercurrent extraction principle." },
+        { text: "Which alkaloid is soluble in water as a free base?", options: ["Morphine", "Caffeine", "Quinine", "Atropine"], correct: 1, explanation: "Caffeine, ephedrine, codeine, pilocarpine are water-soluble bases." },
+        { text: "Marquis reagent (Formaldehyde/conc. H₂SO₄) is used for:", options: ["General precipitate", "Color test for specific alkaloids", "Extraction", "Neutralization"], correct: 1, explanation: "Marquis, Mandelin, Mecke are special color tests for alkaloid identification." },
+        { text: "The prefix 'Nor-' in alkaloid nomenclature indicates:", options: ["Dehydration", "N-demethylation or N-demethoxylation", "Isomerism", "Higher activity"], correct: 1, explanation: "Nor- designates N-demethylation like nornicotine." },
+        { text: "Which alkaloid is antimalarial in its levorotatory form?", options: ["Quinidine", "Quinine", "Ephedrine", "Ergotamine"], correct: 1, explanation: "Quinine (levo) is antimalarial, its isomer quinidine is antiarrhythmic." },
+        { text: "Why are alkaloids often optically active?", options: ["Because they contain at least one asymmetric carbon", "Due to presence of sulfur", "Due to aromatic rings", "All synthetic alkaloids are racemic"], correct: 0, explanation: "Most contain asymmetric carbon, thus optical activity." },
+        { text: "Which alkaloid is a yellow colored rare example?", options: ["Nicotine (brown liquid)", "Berberine (yellow)", "Morphine", "Caffeine"], correct: 1, explanation: "Berberine and colchicine are yellow-colored alkaloids." },
+        { text: "During extraction, why is aqueous ammonia used instead of NaOH for ester alkaloids?", options: ["NH₄OH is weaker and prevents hydrolysis of esters", "NaOH is expensive", "Ammonia forms insoluble salts", "Only ammonia can penetrate cells"], correct: 0, explanation: "Strong alkalis hydrolyze ester alkaloids; NH₄OH is milder." },
+        { text: "Gluco-alkaloids are:", options: ["Alkaloid salts with glucose", "Alkaloid glycosides e.g., Solanine", "Synthetic derivatives", "Quaternary bases"], correct: 1, explanation: "Gluco-alkaloids like solanine are glycosidal form." },
+        { text: "The suffix '-ine' in ergot alkaloids indicates:", options: ["Higher activity", "Lower pharmacological activity compared to -inine", "Isomerism at C-8", "N-oxide form"], correct: 1, explanation: "-ine indicates lower activity (ergotaminine less potent than ergotamine)." },
+        { text: "Caffeine is a weak base and can be determined by:", options: ["Aqueous titration only", "Non-aqueous titration", "Gravimetric method only", "Both gravimetric and non-aqueous titration"], correct: 3, explanation: "Weak bases like caffeine determined by non-aqueous titration & gravimetric methods." },
+        { text: "Which is NOT a typical property of alkaloids?", options: ["Bitter taste", "Most are crystalline and colourless", "High volatility in all cases", "Optical activity"], correct: 2, explanation: "Many alkaloids are non-volatile; only few like nicotine/coniine volatile." },
+        { text: "The basicity order among amines: secondary > primary > tertiary is:", options: ["Always constant", "General trend for aliphatic amines but affected by structure", "Inverse for alkaloids", "Not applicable"], correct: 1, explanation: "General trend R₂NH > RNH₂ > R₃N, but alkaloids show variations due to resonance." },
+        { text: "Which separation method is based on differential solubility in organic solvents after making salts?", options: ["Fractional distillation", "Fractional crystallization", "Precipitation with Mayer's", "Chromatography only"], correct: 1, explanation: "Fractional crystallization, salt formation, and chromatography are used; conversion to crystalline salts is common." },
+        { text: "According to lecture, N-oxides of alkaloids are soluble in:", options: ["Chloroform", "Water", "Benzene", "Ether"], correct: 1, explanation: "Alkaloids N-oxides are soluble in H₂O (slide 16)." }
+    ];
 
-        let userAnswers = new Array(questions.length).fill(null);
-        let answerStatus = new Array(questions.length).fill(null); // 'correct', 'wrong', or null
-        let quizChecked = false;
+    // Ensure exactly 30 questions
+    if (questionsData.length !== 30) console.warn("Questions count mismatch, but adjusting: actual", questionsData.length);
+    // make sure 30
+    while(questionsData.length < 30) questionsData.push({ text: "Placeholder: Alkaloids are basic due to nitrogen lone pair.", options: ["True","False"], correct:0, explanation:"Additional question" });
+    if(questionsData.length > 30) questionsData.length = 30;
 
-        // عرض الأسئلة
-        function renderQuestions() {
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = '';
+    const container = document.getElementById('questionsContainer');
+
+    function buildQuiz() {
+        container.innerHTML = '';
+        questionsData.forEach((q, idx) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            const qNumber = idx + 1;
+            // create question text
+            const qDiv = document.createElement('div');
+            qDiv.className = 'q-text';
+            qDiv.innerHTML = `<span class="q-num">${qNumber}</span><span>${q.text}</span>`;
             
-            questions.forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'question-card';
-                questionDiv.id = `question-${index}`;
-                
-                questionDiv.innerHTML = `
-                    <div class="question-text">
-                        <span style="background: #2a5298; color: white; padding: 2px 10px; border-radius: 20px; margin-left: 10px;">${index + 1}</span>
-                        ${q.text}
-                    </div>
-                    <div class="options" id="options-${index}">
-                        ${q.options.map((opt, optIdx) => `
-                            <div class="option" onclick="selectOption(${index}, '${opt.charAt(0)}', this)">
-                                <input type="radio" name="q${index}" value="${opt.charAt(0)}" ${userAnswers[index] === opt.charAt(0) ? 'checked' : ''} onclick="event.stopPropagation()">
-                                <label>${opt}</label>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <button class="btn-check-question" onclick="checkQuestion(${index})">✅ تصحيح هذا السؤال</button>
-                    <div class="feedback" id="feedback-${index}"></div>
-                `;
-                container.appendChild(questionDiv);
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+            const groupName = `q_${idx}`;
+            let selectedValue = null; // for internal storage but dom driven
+            
+            q.options.forEach((opt, optIdx) => {
+                const optionId = `${groupName}_opt${optIdx}`;
+                const optWrapper = document.createElement('div');
+                optWrapper.className = 'option';
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = groupName;
+                radio.value = optIdx;
+                radio.id = optionId;
+                const label = document.createElement('label');
+                label.htmlFor = optionId;
+                label.textContent = opt;
+                optWrapper.appendChild(radio);
+                optWrapper.appendChild(label);
+                optionsDiv.appendChild(optWrapper);
             });
             
-            updateStats();
-        }
-
-        // اختيار إجابة
-        window.selectOption = function(questionIndex, value, element) {
-            // لو السؤال تم تصحيحه بالفعل، منع التعديل
-            if (answerStatus[questionIndex] !== null) {
-                alert('⚠️ هذا السؤال تم تصحيحه بالفعل. إذا أردت تغيير إجابتك، اضغطي على "مسح الكل" وابدئي من جديد.');
-                return;
-            }
+            const checkBtn = document.createElement('button');
+            checkBtn.textContent = '✓ Check Answer';
+            checkBtn.className = 'check-btn';
             
-            userAnswers[questionIndex] = value;
-            
-            // إلغاء التحديد السابق وإعادة تعيين الخلفيات
-            const optionsDiv = document.getElementById(`options-${questionIndex}`);
-            const allOptions = optionsDiv.querySelectorAll('.option');
-            allOptions.forEach(opt => {
-                opt.classList.remove('correct-highlight', 'wrong-highlight');
-                const radio = opt.querySelector('input');
-                if (radio.value === value) {
-                    radio.checked = true;
-                } else if (radio.checked) {
-                    radio.checked = false;
-                }
-            });
-            
-            // إخفاء التعليق السابق
-            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            const feedbackDiv = document.createElement('div');
             feedbackDiv.className = 'feedback';
-            feedbackDiv.innerHTML = '';
+            feedbackDiv.innerHTML = '⚡ not checked yet';
             
-            updateStats();
-        };
-        
-        // تصحيح سؤال واحد فقط
-        window.checkQuestion = function(questionIndex) {
-            const userAnswer = userAnswers[questionIndex];
-            const correctAnswer = questions[questionIndex].correct;
-            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
-            const optionsDiv = document.getElementById(`options-${questionIndex}`);
-            const allOptions = optionsDiv.querySelectorAll('.option');
-            
-            if (!userAnswer) {
-                feedbackDiv.className = 'feedback wrong';
-                feedbackDiv.innerHTML = '⚠️ من فضلك اختاري إجابة أولاً قبل التصحيح.';
-                return;
-            }
-            
-            if (userAnswer === correctAnswer) {
-                answerStatus[questionIndex] = 'correct';
-                feedbackDiv.className = 'feedback correct';
-                feedbackDiv.innerHTML = `✅ صحيح! الإجابة الصحيحة هي ${correctAnswer}. ${getExplanation(questionIndex)}`;
-                
-                // تمييز الخيارات
-                allOptions.forEach(opt => {
-                    const radio = opt.querySelector('input');
-                    if (radio.value === correctAnswer) {
-                        opt.classList.add('correct-highlight');
-                    }
-                });
-            } else {
-                answerStatus[questionIndex] = 'wrong';
-                feedbackDiv.className = 'feedback wrong';
-                feedbackDiv.innerHTML = `❌ خطأ. الإجابة الصحيحة هي ${correctAnswer}. ${getExplanation(questionIndex)}`;
-                
-                // تمييز الخيارات
-                allOptions.forEach(opt => {
-                    const radio = opt.querySelector('input');
-                    if (radio.value === correctAnswer) {
-                        opt.classList.add('correct-highlight');
-                    }
-                    if (radio.value === userAnswer && radio.value !== correctAnswer) {
-                        opt.classList.add('wrong-highlight');
-                    }
-                });
-            }
-            
-            // تحديث الإحصائيات
-            updateStatsFromStatus();
-        };
-        
-        // شرح مبسط للإجابات الصحيحة
-        function getExplanation(questionIndex) {
-            const explanations = {
-                0: "التعزيز السلبي يزيل مثيراً منفراً (مثل الصوت المزعج) مما يزيد السلوك. العقاب بالسحب يزيل مثيراً معززاً (مثل اللعبة) مما يقلل السلوك.",
-                1: "في فترة ثابتة، الاستجابات تكون قليلة بعد التعزيز مباشرة، ثم تزداد تدريجياً مع اقتراب نهاية الفترة.",
-                2: "CMO-R مثل ضوء التحذير يجعل الهروب معززاً لأنه يشير إلى مثير منفر قادم.",
-                3: "انفجار الإطفاء هو زيادة مؤقتة في السلوك عند بدء تطبيق الإطفاء.",
-                4: "النسبة المتغيرة (VR) تنتج أعلى وأثبت معدل استجابة لأن المعزز يأتي بعد عدد غير متوقع من الاستجابات.",
-                5: "في DRA، يتم تعزيز السلوك البديل مباشرة مع إطفاء السلوك المشكلة.",
-                6: "المعاقب الفعال لا يحتاج إلى مثير تحذيري؛ بل يُقدم مباشرة.",
-                7: "الفرق الأساسي هو الإضافة (إيجابي) مقابل الإزالة (سلبي).",
-                8: "SD يخبرنا أن التعزيز متاح الآن لسلوك معين.",
-                9: "قانون المطابقة يصف كيف يوزع الكائن استجاباته بين البدائل المتاحة.",
-                10: "العجز السلوكي هو سلوك مرغوب يحدث بمعدل أقل من المطلوب.",
-                11: "العقاب السلبي يتضمن إزالة معزز (اللعب) بعد سلوك غير مرغوب.",
-                12: "كل 3 استجابات = نسبة ثابتة (FR3).",
-                13: "MOs تغير من قيمة المعزز ومن السلوك الذي ينتجه.",
-                14: "التعزيز الجزئي يجعل السلوك أكثر مقاومة للإطفاء.",
-                15: "التشكيل يعتمد على تعزيز التقريبات المتتالية، وليس السلوك النهائي مباشرة.",
-                16: "التسلسل الأمامي يبدأ من الخطوة الأولى ويتقدم للأمام.",
-                17: "التسلسل الخلفي: المدرب يكمل كل شيء والمتعلم يقوم بالخطوة الأخيرة فقط أولاً.",
-                18: "اقتصاد البونات قائم على التعزيز الشرطي المعمم (البونات ترتبط بمعززات متعددة).",
-                19: "البونات تُقدم في البداية بعد كل سلوك مرغوب (جدول مستمر).",
-                20: "تكلفة الاستجابة: سحب كمية محددة من التعزيز بعد سلوك غير مرغوب.",
-                21: "التشكيل يخلق سلوكاً جديداً لم يكن موجوداً؛ التسلسل يربط سلوكيات موجودة بالفعل.",
-                22: "الإنتاج = القدرة على أداء السلوك جسدياً ومعرفياً.",
-                23: "النموذج الكفء والمرموق أكثر تأثيراً في التعلم بالملاحظة.",
-                24: "التعزيز بالنيابة: أتعلم لأني رأيت غيري يُكافأ.",
-                25: "تحليل المهمة لا يحذف التعليمات اللفظية؛ بل قد يشملها.",
-                26: "التسلسل الخلفي يعطي المتعلم شعوراً بالإنجاز فور إكمال الخطوة الأخيرة.",
-                27: "معيار التعزيز يُغير فقط بعد أن يتقن المتعلم المعيار الحالي.",
-                28: "التصحيح المفرط: عقاب بجعل الشخص يعيد الموقف بشكل مبالغ فيه.",
-                29: "منع الاستجابة + التعرض = علاج قياسي لعلاج الوسواس القهري."
-            };
-            return explanations[questionIndex] || "راجعي المادة العلمية لتثبيت المعلومة.";
-        }
-        
-        // تحديث الإحصائيات بناءً على answerStatus
-        function updateStatsFromStatus() {
-            let correct = 0;
-            let wrong = 0;
-            let answered = 0;
-            
-            for (let i = 0; i < questions.length; i++) {
-                if (answerStatus[i] === 'correct') {
-                    correct++;
-                    answered++;
-                } else if (answerStatus[i] === 'wrong') {
-                    wrong++;
-                    answered++;
-                }
-            }
-            
-            document.getElementById('correctCount').innerText = correct;
-            document.getElementById('wrongCount').innerText = wrong;
-            document.getElementById('answeredCount').innerText = answered;
-            
-            const progress = (answered / questions.length) * 100;
-            document.getElementById('progressFill').style.width = `${progress}%`;
-        }
-        
-        // تحديث الإحصائيات من userAnswers فقط (قبل التصحيح)
-        function updateStats() {
-            const answered = userAnswers.filter(a => a !== null).length;
-            document.getElementById('answeredCount').innerText = answered;
-            
-            const progress = (answered / questions.length) * 100;
-            document.getElementById('progressFill').style.width = `${progress}%`;
-        }
-        
-        // تصحيح جميع الإجابات دفعة واحدة
-        window.checkAllAnswers = function() {
-            let correct = 0;
-            let wrong = 0;
-            
-            for (let i = 0; i < questions.length; i++) {
-                // لو السؤال تم تصحيحه قبل كده، نتخطاه عشان نحافظ على التصحيح السابق
-                if (answerStatus[i] !== null) {
-                    if (answerStatus[i] === 'correct') correct++;
-                    else if (answerStatus[i] === 'wrong') wrong++;
-                    continue;
-                }
-                
-                const userAnswer = userAnswers[i];
-                const correctAnswer = questions[i].correct;
-                const feedbackDiv = document.getElementById(`feedback-${i}`);
-                const optionsDiv = document.getElementById(`options-${i}`);
-                const allOptions = optionsDiv.querySelectorAll('.option');
-                
-                if (!userAnswer) {
-                    answerStatus[i] = null;
-                    feedbackDiv.className = 'feedback';
-                    feedbackDiv.innerHTML = '<span style="color: #856404;">⚠️ لم يتم الإجابة على هذا السؤال</span>';
-                    continue;
-                }
-                
-                if (userAnswer === correctAnswer) {
-                    correct++;
-                    answerStatus[i] = 'correct';
-                    feedbackDiv.className = 'feedback correct';
-                    feedbackDiv.innerHTML = `✅ صحيح! الإجابة الصحيحة هي ${correctAnswer}. ${getExplanation(i)}`;
-                    
-                    allOptions.forEach(opt => {
-                        const radio = opt.querySelector('input');
-                        if (radio.value === correctAnswer) {
-                            opt.classList.add('correct-highlight');
-                        }
-                    });
-                } else {
-                    wrong++;
-                    answerStatus[i] = 'wrong';
+            // event for check
+            checkBtn.addEventListener('click', () => {
+                const selectedRadio = document.querySelector(`input[name="${groupName}"]:checked`);
+                if (!selectedRadio) {
+                    feedbackDiv.innerHTML = '⚠️ Please select an option first.';
                     feedbackDiv.className = 'feedback wrong';
-                    feedbackDiv.innerHTML = `❌ خطأ. الإجابة الصحيحة هي ${correctAnswer}. ${getExplanation(i)}`;
-                    
-                    allOptions.forEach(opt => {
-                        const radio = opt.querySelector('input');
-                        if (radio.value === correctAnswer) {
-                            opt.classList.add('correct-highlight');
-                        }
-                        if (radio.value === userAnswer && radio.value !== correctAnswer) {
-                            opt.classList.add('wrong-highlight');
-                        }
-                    });
+                    return;
                 }
-            }
+                const selectedIdx = parseInt(selectedRadio.value, 10);
+                const isCorrect = (selectedIdx === q.correct);
+                if (isCorrect) {
+                    feedbackDiv.innerHTML = `✅ Correct! ${q.explanation ? q.explanation : 'Great! Based on alkaloid lecture.'}`;
+                    feedbackDiv.className = 'feedback correct';
+                } else {
+                    const correctLetter = String.fromCharCode(65 + q.correct);
+                    const correctAnswerText = q.options[q.correct];
+                    feedbackDiv.innerHTML = `❌ Wrong. Correct answer: ${correctAnswerText}. ${q.explanation ? q.explanation : 'Review the notes.'}`;
+                    feedbackDiv.className = 'feedback wrong';
+                }
+            });
             
-            quizChecked = true;
-            
-            document.getElementById('correctCount').innerText = correct;
-            document.getElementById('wrongCount').innerText = wrong;
-            
-            const percentage = (correct / questions.length) * 100;
-            const resultCard = document.getElementById('resultCard');
-            resultCard.style.display = 'block';
-            document.getElementById('finalScore').innerHTML = `${correct} / ${questions.length}`;
-            
-            let feedbackText = '';
-            if (percentage >= 90) feedbackText = '🎉 ممتاز! مستوى متميز جداً. إتقانك للمادة ممتاز. استمري بهذا المستوى.';
-            else if (percentage >= 75) feedbackText = '🌟 جيد جداً! أداء قوي. راجعي الأخطاء البسيطة لتحصلي على الدرجة النهائية.';
-            else if (percentage >= 60) feedbackText = '📖 أداء مقبول. تحتاجين مراجعة أعمق للمفاهيم التي أخطأت فيها.';
-            else feedbackText = '📚 تحتاجين مذاكرة أكثر. راجعي الفصلين مرة أخرى وركزي على النقاط التي أخطأت فيها.';
-            
-            document.getElementById('finalFeedback').innerHTML = feedbackText;
-            
-            resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        };
-        
-        // إعادة تعيين الاختبار بالكامل
-        window.resetQuiz = function() {
-            userAnswers = new Array(questions.length).fill(null);
-            answerStatus = new Array(questions.length).fill(null);
-            quizChecked = false;
-            
-            renderQuestions();
-            
-            document.getElementById('correctCount').innerText = '0';
-            document.getElementById('wrongCount').innerText = '0';
-            document.getElementById('resultCard').style.display = 'none';
-        };
-        
-        // بدء التطبيق
-        renderQuestions();
-    </script>
+            card.appendChild(qDiv);
+            card.appendChild(optionsDiv);
+            card.appendChild(checkBtn);
+            card.appendChild(feedbackDiv);
+            container.appendChild(card);
+        });
+    }
+    
+    buildQuiz();
+</script>
 </body>
 </html>
